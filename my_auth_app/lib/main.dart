@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'screens/signup_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/forget_password.dart';
-import 'screens/home.dart'; // Import the real home screen
+// import 'screens/home.dart'; // Import the real home screen
 import 'package:firebase_core/firebase_core.dart';
+import 'Main_Screens/homepage.dart';
+import 'Main_Screens/edit_profile_screen.dart';
+import 'Main_Screens/achievements_screen.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,24 +43,26 @@ class MyApp extends StatelessWidget {
         '/signup': (context) => SignupScreen(),
         '/login': (context) => LoginScreen(),
         '/forgot-password': (context) => ForgotPasswordScreen(),
-        '/home': (context) => HomeScreen(), // Add the real home screen route
+        // App main routes
+        '/home': (context) => const HomePage(), // Navigates to the main home page
+        '/edit-profile': (context) => const EditProfileScreen(),
+        '/achievements': (context) => const AchievementsScreen(),
       },
     );
   }
 }
 
 class WelcomeScreen extends StatelessWidget {
+  const WelcomeScreen({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.transparent, // Set background color
+      backgroundColor: Colors.transparent,
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [
-              Colors.blue,
-              Colors.purple
-            ], // Start and end colors for the gradient
+            colors: [Colors.blue, Colors.purple],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -65,23 +71,23 @@ class WelcomeScreen extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const Text(
                 'Welcome to DostCare',
                 style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
               ),
-              SizedBox(height: 20), // Margin between welcome text and buttons
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/signup');
                 },
-                child: Text('Go to Signup'),
+                child: const Text('Go to Signup'),
               ),
-              SizedBox(height: 20), // Margin between buttons
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, '/login');
                 },
-                child: Text('Go to Login'),
+                child: const Text('Go to Login'),
               ),
             ],
           ),

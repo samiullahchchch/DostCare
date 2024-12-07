@@ -39,6 +39,9 @@ dependencies:
   firebase_auth: ^5.3.4
   cloud_firestore: ^5.5.1
   firebase_core_web: ^2.18.2
+  google_nav_bar: ^5.0.7
+  dash_chat_2: ^0.0.21
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:
