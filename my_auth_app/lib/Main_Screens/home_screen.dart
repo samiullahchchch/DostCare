@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    // Getting the UID of the current user
+    final user = FirebaseAuth.instance.currentUser;
+    final uid = user != null ? user.uid : '';
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.black,
@@ -15,133 +21,157 @@ class HomeScreen extends StatelessWidget {
         ),
         centerTitle: true,
       ),
-      body: Stack(
-        children: [
-          // Background Gradient
-          Container(
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [Color(0xFF1F1C2C), Color(0xFF928DAB)],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+      body: StreamBuilder<DocumentSnapshot>(
+        stream:
+            FirebaseFirestore.instance.collection('users').doc(uid).snapshots(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: Text("Error fetching data"));
+          }
+
+          var data = snapshot.data?.data();
+          String username = 'N/A';
+          String email = 'N/A';
+          if (data is Map<String, dynamic>) {
+            username = data['username'] ?? 'N/A';
+            email = data['email'] ?? 'N/A';
+          }
+
+          return Stack(
+            children: [
+              // Background Gradient
+              Container(
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Color(0xFF1F1C2C), Color(0xFF928DAB)],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
               ),
-            ),
-          ),
-          // Main Content
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 20),
+              // Main Content
+              SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const SizedBox(height: 20),
 
-                  // User Profile Section
-                  Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    elevation: 5,
-                    child: Container(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 20,
-                        vertical: 30,
-                      ),
-                      child: Column(
-                        children: [
-                          // Profile Picture
-                          Icon(
-                            Icons.account_circle,
-                            size: 100,
-                            color: Colors.grey[400],
+                      // User Profile Section
+                      Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        elevation: 5,
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 20,
+                            vertical: 30,
                           ),
-
-                          const SizedBox(height: 10),
-
-                          // User Name
-                          const Text(
-                            "Jaffer Hussain",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-
-                          // User Email
-                          const Text(
-                            "jafferhussain@gmail.com",
-                            style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.grey,
-                            ),
-                          ),
-                          const SizedBox(height: 20),
-
-                          // Profile Options
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          child: Column(
                             children: [
-                              ProfileActionButton(
-                                icon: Icons.edit,
-                                label: "Edit Profile",
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/edit-profile');
-                                },
+                              // Profile Picture
+                              Icon(
+                                Icons.account_circle,
+                                size: 100,
+                                color: Colors.grey[400],
                               ),
-                              ProfileActionButton(
-                                icon: Icons.star_border,
-                                label: "Achievements",
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/achievements');
-                                },
+
+                              const SizedBox(height: 10),
+
+                              // User Name
+                              Text(
+                                username,
+                                style: const TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                              ),
+                              const SizedBox(height: 5),
+
+                              // User Email
+                              Text(
+                                email,
+                                style: const TextStyle(
+                                  fontSize: 16,
+                                  color: Colors.grey,
+                                ),
+                              ),
+                              const SizedBox(height: 20),
+
+                              // Profile Options
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  ProfileActionButton(
+                                    icon: Icons.edit,
+                                    label: "Edit Profile",
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, '/edit-profile');
+                                    },
+                                  ),
+                                  ProfileActionButton(
+                                    icon: Icons.star_border,
+                                    label: "Achievements",
+                                    onPressed: () {
+                                      Navigator.pushNamed(
+                                          context, '/achievements');
+                                    },
+                                  ),
+                                ],
                               ),
                             ],
                           ),
+                        ),
+                      ),
+
+                      const SizedBox(height: 30),
+
+                      // User Stats Section
+                      const Text(
+                        "Your Journey at a Glance",
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: const [
+                          UserStatCard(
+                            title: "Quotes Viewed",
+                            value: "120",
+                            color: Colors.lightBlueAccent,
+                          ),
+                          UserStatCard(
+                            title: "Chats",
+                            value: "45",
+                            color: Colors.pinkAccent,
+                          ),
+                          UserStatCard(
+                            title: "Days Active",
+                            value: "60",
+                            color: Colors.greenAccent,
+                          ),
                         ],
-                      ),
-                    ),
-                  ),
-
-                  const SizedBox(height: 30),
-
-                  // User Stats Section
-                  const Text(
-                    "Your Journey at a Glance",
-                    style: TextStyle(
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: const [
-                      UserStatCard(
-                        title: "Quotes Viewed",
-                        value: "120",
-                        color: Colors.lightBlueAccent,
-                      ),
-                      UserStatCard(
-                        title: "Chats",
-                        value: "45",
-                        color: Colors.pinkAccent,
-                      ),
-                      UserStatCard(
-                        title: "Days Active",
-                        value: "60",
-                        color: Colors.greenAccent,
                       ),
                     ],
                   ),
-                ],
+                ),
               ),
-            ),
-          ),
-        ],
+            ],
+          );
+        },
       ),
     );
   }

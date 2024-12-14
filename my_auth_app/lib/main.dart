@@ -8,7 +8,10 @@ import 'package:firebase_core/firebase_core.dart';
 import 'Main_Screens/homepage.dart';
 import 'Main_Screens/edit_profile_screen.dart';
 import 'Main_Screens/achievements_screen.dart';
+import 'Main_Screens/quote.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+import 'Main_Screens/upload.dart'; // Import your upload file
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,6 +29,7 @@ void main() async {
     await Firebase.initializeApp();
   }
 
+  // storeQuotes(); // Call the function to store quotes
   runApp(MyApp());
 }
 
@@ -44,9 +48,11 @@ class MyApp extends StatelessWidget {
         '/login': (context) => LoginScreen(),
         '/forgot-password': (context) => ForgotPasswordScreen(),
         // App main routes
-        '/home': (context) => const HomePage(), // Navigates to the main home page
+        '/home': (context) =>
+            const HomePage(), // Navigates to the main home page
         '/edit-profile': (context) => const EditProfileScreen(),
         '/achievements': (context) => const AchievementsScreen(),
+        '/quote': (context) => DailyQuoteScreen(),
       },
     );
   }
