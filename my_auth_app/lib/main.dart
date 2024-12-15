@@ -9,6 +9,7 @@ import 'Main_Screens/homepage.dart';
 import 'Main_Screens/edit_profile_screen.dart';
 import 'Main_Screens/achievements_screen.dart';
 import 'Main_Screens/quote.dart';
+import 'Main_Screens/settings_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 import 'Main_Screens/upload.dart'; // Import your upload file
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'DostCare App',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
@@ -53,6 +54,7 @@ class MyApp extends StatelessWidget {
         '/edit-profile': (context) => const EditProfileScreen(),
         '/achievements': (context) => const AchievementsScreen(),
         '/quote': (context) => DailyQuoteScreen(),
+        '/settings': (context) => SettingsScreen(),
       },
     );
   }
@@ -73,30 +75,45 @@ class WelcomeScreen extends StatelessWidget {
             end: Alignment.bottomRight,
           ),
         ),
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Text(
-                'Welcome to DostCare',
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+        child: Column(
+          children: [
+            const SizedBox(height: 100), // Add spacing at the top
+            Center(
+              child: Image.asset(
+                'logo.png', // Replace with the correct path to your logo
+                height: 300, // Adjust height for your logo
+                width: 300,  // Adjust width for your logo
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/signup');
-                },
-                child: const Text('Go to Signup'),
+            ),
+            const SizedBox(height: 1), // Space between logo and content
+            Expanded(
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text(
+                      'Welcome to DostCare',
+                      style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/signup');
+                      },
+                      child: const Text('Go to Signup'),
+                    ),
+                    const SizedBox(height: 20),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/login');
+                      },
+                      child: const Text('Go to Login'),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/login');
-                },
-                child: const Text('Go to Login'),
-              ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

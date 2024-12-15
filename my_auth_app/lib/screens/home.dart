@@ -14,6 +14,8 @@ class HomeScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            // Add the logo here
+
             const Text(
               'Welcome to Our App',
               style: TextStyle(

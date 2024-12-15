@@ -17,7 +17,7 @@ class HomeScreen extends StatelessWidget {
         elevation: 0,
         title: const Text(
           "DostCare",
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 24),
+          style: TextStyle(fontSize: 18, color: Colors.white),
         ),
         centerTitle: true,
       ),
@@ -42,13 +42,13 @@ class HomeScreen extends StatelessWidget {
 
           return Stack(
             children: [
-              // Background Gradient
+              // Updated Background Gradient
               Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF1F1C2C), Color(0xFF928DAB)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                    colors: [Color(0xFFDAE2F8), Color(0xFFD6A4A4)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
                 ),
               ),
@@ -150,17 +150,17 @@ class HomeScreen extends StatelessWidget {
                         children: const [
                           UserStatCard(
                             title: "Quotes Viewed",
-                            value: "120",
+                            value: "0",
                             color: Colors.lightBlueAccent,
                           ),
                           UserStatCard(
                             title: "Chats",
-                            value: "45",
+                            value: "0",
                             color: Colors.pinkAccent,
                           ),
                           UserStatCard(
                             title: "Days Active",
-                            value: "60",
+                            value: "0",
                             color: Colors.greenAccent,
                           ),
                         ],

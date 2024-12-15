@@ -25,6 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor:
             Colors.blue.withOpacity(0.7), // Semi-transparent background
         elevation: 0,
+        
         title: const Text(
           'Login',
           style: TextStyle(color: Colors.white),

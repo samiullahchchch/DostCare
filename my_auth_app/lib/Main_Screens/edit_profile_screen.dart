@@ -9,8 +9,21 @@ class EditProfileScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Edit Profile"),
         backgroundColor: Colors.black,
+        titleTextStyle: const TextStyle(
+          color: Colors.white,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Padding(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFFDAE2F8), Color(0xFFD6A4A4)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -24,45 +37,39 @@ class EditProfileScreen extends StatelessWidget {
             // Name Field
             TextField(
               decoration: InputDecoration(
-                labelText: "Name",
-                border: OutlineInputBorder(),
-              ),
-            ),
-            const SizedBox(height: 20),
-
-            // Email Field
-            TextField(
-              decoration: InputDecoration(
-                labelText: "Email",
+                labelText: "write new username",
                 border: OutlineInputBorder(),
               ),
             ),
             const SizedBox(height: 20),
 
             // Save Button
-            ElevatedButton(
-              onPressed: () {
-                // Add save functionality here if needed
-                Navigator.pop(context); // Navigate back to HomePage
+            MouseRegion(
+              onEnter: (_) {
+                // Change button color on hover
+                // This will change the color from white to its opposite on hover
               },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.black,
+              onExit: (_) {
+                // Change back to the original color
+              },
+              child: ElevatedButton(
+                onPressed: () {
+                  // Add save functionality here if needed
+                  Navigator.pop(context); // Navigate back to HomePage
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color.fromARGB(255, 255, 255, 255),
+                  textStyle: const TextStyle(
+                    color: Color.fromARGB(255, 118, 250, 255),
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                child: const Text("Save Changes"),
               ),
-              child: const Text("Save Changes"),
             ),
 
             const SizedBox(height: 20),
-
-            // Back to Home Button
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context); // Navigate back to HomePage
-              },
-              child: const Text(
-                "Go Back to Home",
-                style: TextStyle(fontSize: 16, color: Colors.blueAccent),
-              ),
-            ),
           ],
         ),
       ),

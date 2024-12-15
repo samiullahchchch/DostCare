@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth for user context
+import 'package:firebase_auth/firebase_auth.dart';
 
 class DailyQuoteScreen extends StatefulWidget {
   @override
@@ -43,7 +43,6 @@ class _DailyQuoteScreenState extends State<DailyQuoteScreen> {
   }
 
   void saveToFavorites() async {
-    // Get the currently authenticated user
     User? user = FirebaseAuth.instance.currentUser;
 
     if (user == null) {
@@ -53,11 +52,10 @@ class _DailyQuoteScreenState extends State<DailyQuoteScreen> {
       return;
     }
 
-    String userId = user.uid; // Get the user's unique ID
+    String userId = user.uid;
 
     FirebaseFirestore firestore = FirebaseFirestore.instance;
     try {
-      // Save the favorite quote to the user's `favourites` subcollection
       await firestore
           .collection('users')
           .doc(userId)
@@ -86,22 +84,22 @@ class _DailyQuoteScreenState extends State<DailyQuoteScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Daily Inspiration'),
+        title: Text(
+          'Daily Inspiration',
+          style: TextStyle(fontSize: 18, color: Colors.white),
+        ),
         centerTitle: true,
-        backgroundColor: Colors.indigoAccent,
+        backgroundColor: Colors.black,
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Container(
-          margin: EdgeInsets.symmetric(vertical: 10.0),
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue.shade300, Colors.purple.shade300],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(10),
+      
+        body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Color(0xFFDAE2F8), Color(0xFFD6A4A4)],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
           ),
+        ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -206,7 +204,6 @@ class _DailyQuoteScreenState extends State<DailyQuoteScreen> {
             ],
           ),
         ),
-      ),
     );
   }
 }
