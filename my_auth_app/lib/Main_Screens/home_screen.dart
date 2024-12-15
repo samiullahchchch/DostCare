@@ -42,13 +42,13 @@ class HomeScreen extends StatelessWidget {
 
           return Stack(
             children: [
-              // Background Gradient
+              // Updated Background Gradient
               Container(
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    colors: [Color(0xFF1F1C2C), Color(0xFF928DAB)],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
+                    colors: [Color(0xFFDAE2F8), Color(0xFFD6A4A4)],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
                   ),
                 ),
               ),

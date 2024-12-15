@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:intl/intl.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart'; // Import Firebase Auth for user context
+// import 'package:my_auth_app/Main_Screens/homepage.dart'; // Import your home screen
 
 class DailyQuoteScreen extends StatefulWidget {
   @override
@@ -89,6 +90,13 @@ class _DailyQuoteScreenState extends State<DailyQuoteScreen> {
         title: Text('Daily Inspiration'),
         centerTitle: true,
         backgroundColor: Colors.indigoAccent,
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pushReplacementNamed(
+                context, '/home'); // Go to the home screen
+          },
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

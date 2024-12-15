@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'home_screen.dart';
-import 'daily_quotes_screen.dart';
+import 'quote.dart';
 import 'search_screen.dart';
 import 'settings_screen.dart';
 import 'chatbot_screen.dart';
@@ -21,7 +21,7 @@ class _HomePageState extends State<HomePage> {
   // List of screens
   final List<Widget> _screens = [
     HomeScreen(),
-    DailyQuotesScreen(),
+    DailyQuoteScreen(),
     ChatbotScreen(),
     SearchScreen(),
     SettingsScreen(),
